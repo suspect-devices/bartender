@@ -35,9 +35,13 @@ def whiskey(style):
     abort(400, "I am going to need to see some id.")
 
   # After we have detemined that this is legit.
+  # This should be moved to a .env or some other map. Ie style->repo-location
+  #
   match style:
     case "neat":
       subprocess.call(['at', 'now', '-f', '/var/www/digithink/repo/makesite.sh'])
+    case "lemonade":
+      subprocess.call(['at', 'now', '-f', '/var/www/bartender/repo/makesite.sh'])
     case "sour":
       subprocess.call(['at', 'now', '-f', '/var/www/3dangst/repo/makesite.sh'])
     case _: abort(404,"We Don't Serve That Here!")

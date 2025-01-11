@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/digithink/whiskey
+WorkingDirectory=/var/www/bartender/repo/whiskey
 #Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
 #     --bind unix:/run/whiskey.sock  \
 

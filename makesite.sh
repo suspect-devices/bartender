@@ -7,4 +7,4 @@
     mv ../site ../osite
     mv site ..
     echo "=========================== Done: `date` ===================="
-}| tee logs/pullandbuild.out
+}| tee logs/mksite.bartender.out
