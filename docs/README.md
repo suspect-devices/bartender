@@ -25,7 +25,7 @@ graph LR
 
 ## The source code and the results
 
-- [https://github.com/feurig/digithink/tree/main/whiskey](https://github.com/feurig/digithink/tree/main/whiskey)
+- [https://github.com/suspect-devices/bartender](https://github.com/suspect-devices/bartender)
   The source code for the bartender service is in the same repository as the content it serves
 - [https://www.digithink.com](https://www.digithink.com) is the one of the target websites.
 - [https://www.3dangst.com](https://www.3dangst.com) is another one of the target website.
@@ -49,7 +49,7 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/digithink/whiskey
+WorkingDirectory=/var/www/bartender/repo/whiskey
 #Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
 #     --bind unix:/run/whiskey.sock  \
 
@@ -57,8 +57,8 @@ ExecStart=/usr/bin/gunicorn \
      --workers 3 \
      --bind 127.0.0.1:5000 \
      --reload \
-     --access-logfile /var/www/digithink/whiskey/logs/gunicorn_access.log \
-     --error-logfile /var/www/digithink/whiskey/logs/gunicorn_error.log \
+     --access-logfile /var/www/bartender/repo/whiskey/logs/gunicorn_access.log \
+     --error-logfile /var/www/bartender/repo/whiskey/logs/gunicorn_error.log \
      -m 007 wsgi:app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
@@ -88,11 +88,18 @@ server {
         include proxy_params;
         proxy_pass http://bartender/whiskey;
     }
+
+    error_page 404 /404.html;
+    location  /404.html {
+          internal;
+    #     root  /var/www/digithink/site;
+    }
+    location /lacuenta { # FIX THIS
+        root /var/www/bartender/whiskey/logs;
+    }
 }
 
 server {
-    root /var/www/bartender/site;
-    index index.html;
     if ($host = bartender.digithink.com) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
