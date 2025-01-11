@@ -18,7 +18,7 @@ graph LR
    A -- 200 ok / 400 bad id / 404  --> N[NGinX]
    N <-- bartender.digithink.com --> I([Internet])
    G[(github)] -- pull --> D
-   C --> D[/var/www/site/makesite.sh]
+   C --> D[makesite.sh]
    D -- mkdocks build --> O[(site)] -->N
    N -- whiskey/STYLE --> A
 ```
