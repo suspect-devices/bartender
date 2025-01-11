@@ -44,7 +44,7 @@ def whiskey(style):
       subprocess.call(['at', 'now', '-f', '/var/www/bartender/repo/makesite.sh'])
     case "sour":
       subprocess.call(['at', 'now', '-f', '/var/www/3dangst/repo/makesite.sh'])
-    case _: abort(404,"We Don't Serve That Here!")
+    case _: abort(404,"We Don't Serve That Here!(whiskey/"+style+")")
     
   return f"One Whiskey, {escape(style)}!"
 
