@@ -1,1 +1,8 @@
+\.AppleDouble
+**/._[a-zA-Z]*
+site/*
+whiskey/bartender/site
+whiskey/bartender/logs
 .DS_Store
+.vscode
+.env
