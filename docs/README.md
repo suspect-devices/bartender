@@ -27,7 +27,8 @@ graph LR
 
 - [https://github.com/feurig/digithink/tree/main/whiskey](https://github.com/feurig/digithink/tree/main/whiskey)
   The source code for the bartender service is in the same repository as the content it serves
-- [https://www.digithink.com](https://www.digithink.com) is the target website.
+- [https://www.digithink.com](https://www.digithink.com) is the one of the target websites.
+- [https://www.3dangst.com](https://www.3dangst.com) is another one of the target website.
 - [https://bartender.digithink.com/](https://bartender.digithink.com/) contains this and the other documents for the service.
 
 ### Installing the service
@@ -81,22 +82,16 @@ server {
     ssl_certificate /etc/letsencrypt/live/bartender.digithink.com/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/bartender.digithink.com/privkey.pem; # managed by Certbot
 
-    root /var/www/digithink/whiskey/bartender;
+    root /var/www/bartender/site;
     index index.html;
     location /whiskey {
         include proxy_params;
         proxy_pass http://bartender/whiskey;
     }
-    # point the error page to the one created by mkdocs
-    error_page 404 /404.html;
-    location  /404.html {
-          internal;
-    }
 }
 
-# redirect http to https
 server {
-    root /var/www/digithink/whiskey/bartender;
+    root /var/www/bartender/site;
     index index.html;
     if ($host = bartender.digithink.com) {
         return 301 https://$host$request_uri;
@@ -126,11 +121,11 @@ app = Flask(__name__)
 @app.route("/whiskey/<style>",methods = ['POST'])
 def whiskey(style):
     # break this out by style.
-    subprocess.call(['at', 'now', '-f', '/var/www/digithink/whiskey/pullandbuild.sh'])
+    subprocess.call(['at', 'now', '-f', '/var/www/digithink/site/makesite.sh'])
     return f"One Whiskey, {escape(style)}!"
 ```
 
-The actual [drink.py](https://github.com/suspect-devices/digithink/blob/main/whiskey/drink.py) is slightly more developed.
+The actual [drink.py](https://github.com/suspect-devices/bartender/blob/main/whiskey/drink.py) is slightly more developed.
 
 #### wsgi.py, Turning the above into a WSGI app
 
@@ -155,6 +150,7 @@ apt install python3-regex
 apt install libvips-dev
 apt install python3-pip
 pip3 install mkdocs-material --break-system-packages
+pip3 install mkdocs-with-pdf -U git+https://github.com/domWalters/mkdocs-to-pdf.git@release-v0.9.4 --break-system-packages
 ```
 
 #### pull dependencies based on the current mkdocs install and mkdocs.yml
