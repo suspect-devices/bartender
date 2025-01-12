@@ -26,7 +26,7 @@ graph LR
 ## The source code and the results
 
 - [https://github.com/suspect-devices/bartender](https://github.com/suspect-devices/bartender)
-  The source code for the bartender service is in the same repository as the content it serves
+  The source code for the bartender service serves the it's documentation as well as several other sites.
 - [https://www.digithink.com](https://www.digithink.com) is the one of the target websites.
 - [https://www.3dangst.com](https://www.3dangst.com) is another one of the target website.
 - [https://bartender.digithink.com/](https://bartender.digithink.com/) contains this and the other documents for the service.
@@ -128,7 +128,7 @@ app = Flask(__name__)
 @app.route("/whiskey/<style>",methods = ['POST'])
 def whiskey(style):
     # break this out by style.
-    subprocess.call(['at', 'now', '-f', '/var/www/digithink/site/makesite.sh'])
+    subprocess.call(['at', 'now', '-f', '/var/www/digithink/repo/makesite.sh'])
     return f"One Whiskey, {escape(style)}!"
 ```
 
